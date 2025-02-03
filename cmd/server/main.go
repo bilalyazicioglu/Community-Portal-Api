@@ -7,9 +7,9 @@ import (
 	"os"
 	"time"
 
+	"github.com/MACSEC-Proje-Gelistirme/Community-Portal-Api/internal/api"
 	db "github.com/MACSEC-Proje-Gelistirme/Community-Portal-Api/pkg/database"
 
-	"github.com/MACSEC-Proje-Gelistirme/Community-Portal-Api/internal/api"
 	"github.com/joho/godotenv"
 )
 
