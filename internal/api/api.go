@@ -9,10 +9,20 @@ import (
 )
 
 type Router struct {
-	db *sql.DB
+	router *mux.Router
+	db     *sql.DB
 }
 
 func NewRouter(db *sql.DB) *Router {
+	r := mux.NewRouter()
+	ro := &Router{
+		router: r,
+		db:     db,
+	}
+
+	// Rotaları burada tanımlayın
+	ro.router.HandleFunc("/api/user", ro.GetUser).Methods("GET")
+	ro.router.HandleFunc("/api/user", ro.CreateUser).Methods("POST")
 	return &Router{
 		db: db,
 	}
@@ -27,7 +37,6 @@ func (r *Router) NewRouter() *mux.Router {
 
 	protected := router.PathPrefix("/api").Subrouter()
 	protected.Use(middleware.EnsureValidToken)
-
 
 	return router
 }
