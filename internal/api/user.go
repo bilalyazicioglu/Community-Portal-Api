@@ -36,3 +36,19 @@ func (ro *Router) CreateUser(w http.ResponseWriter, r *http.Request) {
 
 	utils.JSONResponse(w, http.StatusCreated, result)
 }
+func (ro *Router) GetUser(w http.ResponseWriter, r *http.Request) {
+	userID := r.URL.Query().Get("id")
+	if userID == "" {
+		utils.JSONError(w, http.StatusBadRequest, "User ID is required")
+		return
+	}
+
+	userRepository := repository.NewUserRepository(ro.db)
+	user, err := userRepository.GetUserByID(userID)
+	if err != nil {
+		utils.JSONError(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	utils.JSONResponse(w, http.StatusOK, user)
+}
